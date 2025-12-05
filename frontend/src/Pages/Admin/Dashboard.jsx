@@ -8,7 +8,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import { CgProfile } from "react-icons/cg";
 import axios  from 'axios';
 import { signOut } from '../../Redux Toolkit/User/userSlice';
-import { toast } from 'sonner';
+import { toast } from 'react-hot-toast';
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { toggleTheme } from '../../Redux Toolkit/Theme/themeSlice';
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";

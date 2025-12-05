@@ -5,9 +5,9 @@ import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux';
 import { toggleTheme } from '../Redux Toolkit/Theme/themeSlice';
-import axios from "axios" 
-import {toast} from 'sonner'
-import {useNavigate} from 'react-router-dom'
+import axios from "axios"
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 import { signOut } from '../Redux Toolkit/User/userSlice';
 
 const Header = () => {
@@ -15,15 +15,15 @@ const Header = () => {
   const [profileOpen, setProfileOpen] = useState(false)
   const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.theme.darkMode);
-  const user  = useSelector((state)=>state?.user?.isLoggedIn) ;
-  const role  = useSelector((state)=>state?.user?.user?.role) ;
-  const id = useSelector((state)=>state?.user?.user?.id) ;
-  const total = useSelector((state)=>state?.cart?.totalProducts)
- 
-  
+  const user = useSelector((state) => state?.user?.isLoggedIn);
+  const role = useSelector((state) => state?.user?.user?.role);
+  const id = useSelector((state) => state?.user?.user?.id);
+  const total = useSelector((state) => state?.cart?.totalProducts)
 
-  const navigate = useNavigate() ;
-  
+
+
+  const navigate = useNavigate();
+
 
   // Theme colors
   const theme = {
@@ -39,7 +39,7 @@ const Header = () => {
       mobileMenu: 'bg-white',
       searchBorder: 'border-gray-300',
       searchFocus: 'focus:ring-blue-500',
-      button:'hover:text-black border '
+      button: 'hover:text-black border '
     },
     dark: {
       bg: 'bg-zinc-800',
@@ -58,31 +58,29 @@ const Header = () => {
 
   const currentTheme = darkMode ? theme.dark : theme.light;
 
-  const handleLogOut = async ()=>{
+  const handleLogOut = async () => {
 
     try {
 
-        
-            const response = await axios.post(import.meta.env.VITE_API_URL+'/auth/sign-out',{},{withCredentials:true}) ;
-            const user = await response.data;
 
-        if(user.success){
+      const response = await axios.post(import.meta.env.VITE_API_URL + '/auth/sign-out', {}, { withCredentials: true });
+      const user = await response.data;
 
-          dispatch(signOut())
-          toast.success(user.message) ;
-          navigate('/sign-in')
-          return ;
-         
-          
+      if (user.success) {
+
+        dispatch(signOut())
+        toast.success(user.message);
+        navigate('/sign-in')
+        return;
       }
-      
-    } catch (error) {
-      
-        toast.success(error?.response?.data?.message) ;
-          dispatch(signOut());
-          navigate('/sign-in')
 
-          return ;
+    } catch (error) {
+
+      toast.success(error?.response?.data?.message);
+      dispatch(signOut());
+      navigate('/sign-in')
+
+      return;
 
 
     }
@@ -91,12 +89,12 @@ const Header = () => {
   return (
     <header className={`flex items-center justify-between p-4 ${currentTheme.bg} ${currentTheme.shadow}
     transition-colors duration-300 relative`}>
-      
+
       {/* === LEFT SECTION === */}
 
-      
+
       <div className="flex items-center space-x-4">
-       
+
         <button
           className="md:hidden text-2xl z-50"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -137,18 +135,18 @@ const Header = () => {
 
           {
 
-            !user &&  <NavLink
-            to="/sign-up"
-            className={({ isActive }) =>
-              isActive
-                ? `${currentTheme.activeText} border-b-2 border-blue-600 pb-1`
-                : currentTheme.hoverText
-            }
-          >
-            Sign Up
-          </NavLink>
+            !user && <NavLink
+              to="/sign-up"
+              className={({ isActive }) =>
+                isActive
+                  ? `${currentTheme.activeText} border-b-2 border-blue-600 pb-1`
+                  : currentTheme.hoverText
+              }
+            >
+              Sign Up
+            </NavLink>
           }
-         
+
           <NavLink
             to="/about"
             className={({ isActive }) =>
@@ -165,59 +163,59 @@ const Header = () => {
         <button className={`text-xl cursor-pointer ${currentTheme.text}`} onClick={() => dispatch(toggleTheme())}>
           {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
         </button>
-         
+
         {/* Cart Icon - always visible */}
-{
-  user && (
-    <div className="relative">
-      <Link to={'/cart'}>
-         <FiShoppingCart className={`text-xl cursor-pointer ${currentTheme.text}`} />
-      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs  px-1.5 py-0.5a rounded-full">
-        {total}
-      </span>
-      </Link>
-     
-    </div>
-  )
-}
+        {
+          user && (
+            <div className="relative">
+              <Link to={'/cart'}>
+                <FiShoppingCart className={`text-xl cursor-pointer ${currentTheme.text}`} />
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs  px-1.5 py-0.5a rounded-full">
+                  {total}
+                </span>
+              </Link>
+
+            </div>
+          )
+        }
 
         {/* Profile Icon - always visible */}
         <div className="relative">
 
           {
 
-            user &&  <FiUser
-            className={`text-xl cursor-pointer ${currentTheme.text}`}
-            onClick={() => setProfileOpen(!profileOpen)}
-          />
+            user && <FiUser
+              className={`text-xl cursor-pointer ${currentTheme.text}`}
+              onClick={() => setProfileOpen(!profileOpen)}
+            />
           }
-         
+
 
           {profileOpen && (
             <div className={`absolute right-0 mt-2 w-32 border rounded ${currentTheme.profileMenu} ${currentTheme.shadow} z-50`}>
-              
+
               {
 
-                user && 
-                 
-                  <Link
-                    to={`/profile/${id}`}
-                    onClick={() => setProfileOpen(false)}
-                    className={`block px-4 py-2 ${currentTheme.text} ${currentTheme.profileHover}`}
-                  >
-                    Profile
-                  </Link>
+                user &&
+
+                <Link
+                  to={`/profile/${id}`}
+                  onClick={() => setProfileOpen(false)}
+                  className={`block px-4 py-2 ${currentTheme.text} ${currentTheme.profileHover}`}
+                >
+                  Profile
+                </Link>
 
               }
-            
-                
-                  <Link
-                    to={`/user-orders`}
-                    onClick={() => setProfileOpen(false)}
-                    className={`block px-4 py-2 ${currentTheme.text} ${currentTheme.profileHover}`}
-                  >
-                    Orders
-                  </Link>
+
+
+              <Link
+                to={`/user-orders`}
+                onClick={() => setProfileOpen(false)}
+                className={`block px-4 py-2 ${currentTheme.text} ${currentTheme.profileHover}`}
+              >
+                Orders
+              </Link>
               <button
                 onClick={() => {
                   setProfileOpen(false)
@@ -252,12 +250,12 @@ const Header = () => {
 
           {/* Mobile navigation links */}
           <nav className="flex flex-col space-y-4 text-lg">
-            <NavLink 
-              to="/" 
-              onClick={() => setMenuOpen(false)} 
-              className={({ isActive }) => 
-                isActive 
-                  ? `${currentTheme.activeText} font-bold` 
+            <NavLink
+              to="/"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                isActive
+                  ? `${currentTheme.activeText} font-bold`
                   : `hover:text-blue-500`
               }
             >
@@ -266,26 +264,26 @@ const Header = () => {
 
             {
 
-              !user && 
-               <NavLink 
-              to="/sign-up" 
-              onClick={() => setMenuOpen(false)} 
-              className={({ isActive }) => 
-                isActive 
-                  ? `${currentTheme.activeText} font-bold` 
-                  : `hover:text-blue-500`
-              }
-            >
-              Sign Up
-            </NavLink>
+              !user &&
+              <NavLink
+                to="/sign-up"
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? `${currentTheme.activeText} font-bold`
+                    : `hover:text-blue-500`
+                }
+              >
+                Sign Up
+              </NavLink>
             }
-           
-            <NavLink 
-              to="/about" 
-              onClick={() => setMenuOpen(false)} 
-              className={({ isActive }) => 
-                isActive 
-                  ? `${currentTheme.activeText} font-bold` 
+
+            <NavLink
+              to="/about"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                isActive
+                  ? `${currentTheme.activeText} font-bold`
                   : `hover:text-blue-500`
               }
             >

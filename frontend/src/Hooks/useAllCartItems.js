@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useDispatch,useSelector} from 'react-redux'
 import { endFetchAllItems, fetchAllItems, startFetchAllItems } from "../Redux Toolkit/Cart/cartSlice";
-import {toast} from 'sonner'
+import { toast } from 'react-hot-toast'
 
 export const useAllCartItems = ()=>{
 

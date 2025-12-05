@@ -34,16 +34,16 @@
 //       button: 'bg-white text-black hover:bg-gray-200',
 //     },
 //   }
-  
+
 //   const currentTheme = darkMode ? theme.dark : theme.light
 //   const {
 //     register,
 //     handleSubmit,
 //     formState: { errors },
 //     reset
-    
+
 //   } = useForm()
-  
+
 //   const { id } = useParams()
 // useEffect(() => {
 //     const currentUser = async () => {
@@ -56,16 +56,16 @@
 //                reset({
 //                   username: response.data.user.username,
 //                   email: response.data.user.email,
-                  
+
 //                 });
-            
+
 //             return 
-          
+
 //         }
 //       } catch (error) {
 //         toast.error(error?.response?.data?.message)
 //         return 
-        
+
 //       }
 //     }
 
@@ -76,10 +76,10 @@
 //     return <Navigate to={'/sign-in'} />
 //   }
 
-  
-  
 
-  
+
+
+
 
 //   const onSubmit = async (data) => {
 //     console.log(data)
@@ -90,7 +90,7 @@
 //             withCredentials:true 
 //         })
 
-        
+
 
 //         if(api_response.data.success){
 
@@ -100,7 +100,7 @@
 //             reset() ;
 //             return ;
 //         }
-        
+
 //     } catch (error) {
 //         toast.error(error?.response?.data?.message)
 //     }
@@ -108,9 +108,9 @@
 
 //         reset() ;
 //     }
-    
 
-    
+
+
 //   }
 
 //   return (
@@ -126,7 +126,7 @@
 //               placeholder={details?.username}
 //               {...register("username")}
 //               className={`w-full px-4 py-2 rounded-md border ${currentTheme.border} ${currentTheme.inputBg} focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              
+
 //             />
 //           </div>
 
@@ -137,7 +137,7 @@
 //               placeholder={details?.email}
 //               {...register("email")}
 //               className={`w-full px-4 py-2 rounded-md border ${currentTheme.border} ${currentTheme.inputBg} focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              
+
 //             />
 //           </div>
 
@@ -170,9 +170,9 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate, useParams } from 'react-router-dom'
 import { useForm } from "react-hook-form"
-import axios from 'axios' 
+import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { toast } from 'sonner'
+import { toast } from 'react-hot-toast'
 import { updateProfile } from '../Redux Toolkit/User/userSlice'
 
 const Profile = () => {
@@ -180,7 +180,7 @@ const Profile = () => {
   const user = useSelector((state) => state?.user?.user)
   const [details, setDetails] = useState()
   const [update, setupdate] = useState(false)
-  const dispatch = useDispatch() ;
+  const dispatch = useDispatch();
 
   const darkMode = useSelector((state) => state.theme.darkMode)
 
@@ -206,83 +206,83 @@ const Profile = () => {
       label: 'text-gray-300',
     },
   }
-  
+
   const currentTheme = darkMode ? theme.dark : theme.light
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset
-    
+
   } = useForm()
-  
+
   const { id } = useParams()
-useEffect(() => {
+  useEffect(() => {
     const currentUser = async () => {
       try {
         const response = await axios.get(import.meta.env.VITE_API_URL + `/user-details/${id}`, { withCredentials: true })
-        if(response.data.success){
+        if (response.data.success) {
 
 
-            setDetails(response.data.user) 
-               reset({
-                  username: response.data.user.username,
-                  email: response.data.user.email,
-                  
-                });
-            
-            return 
-          
+          setDetails(response.data.user)
+          reset({
+            username: response.data.user.username,
+            email: response.data.user.email,
+
+          });
+
+          return
+
         }
       } catch (error) {
         toast.error(error?.response?.data?.message)
-        return 
-        
+        return
+
       }
     }
 
     currentUser()
-  }, [id,update , reset])
+  }, [id, update, reset])
 
   if (!role) {
     return <Navigate to={'/sign-in'} />
   }
 
-  
-  
 
-  
+
+
+
 
   const onSubmit = async (data) => {
     console.log(data)
 
     try {
 
-        const api_response = await axios.put(import.meta.env.VITE_API_URL+`/update-user/${id}`,data,{
-            withCredentials:true 
-        })
+      const api_response = await axios.put(import.meta.env.VITE_API_URL + `/update-user/${id}`, data, {
+        withCredentials: true
+      })
 
-        
 
-        if(api_response.data.success){
 
-            setupdate(!update)
-            toast.success(api_response.data.message) ;
-            dispatch(updateProfile(api_response.data.user))
-            reset() ;
-            return ;
-        }
-        
+      if (api_response.data.success) {
+
+        setupdate(!update)
+        toast.success(api_response.data.message);
+        dispatch(updateProfile(api_response.data.user))
+        reset();
+        return;
+      }
+
     } catch (error) {
-        toast.error(error?.response?.data?.message)
+      toast.error(error?.response?.data?.message)
     }
-    finally{
+    finally {
 
-        reset() ;
+      reset();
     }
-    
 
-    
+
+
   }
 
   return (
@@ -310,7 +310,7 @@ useEffect(() => {
                 placeholder={details?.username}
                 {...register("username")}
                 className={`w-full px-3 py-2.5 text-sm rounded-lg border-2 ${currentTheme.border} ${currentTheme.inputBg} focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 placeholder-gray-400`}
-                
+
               />
             </div>
 
@@ -323,7 +323,7 @@ useEffect(() => {
                 placeholder={details?.email}
                 {...register("email")}
                 className={`w-full px-3 py-2.5 text-sm rounded-lg border-2 ${currentTheme.border} ${currentTheme.inputBg} focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 placeholder-gray-400`}
-                
+
               />
             </div>
           </div>
