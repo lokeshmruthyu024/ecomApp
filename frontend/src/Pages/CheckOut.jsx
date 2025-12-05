@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import {toast} from 'sonner'
+import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../Components/Spinner';
 import { clearCart } from '../Redux Toolkit/Cart/cartSlice';

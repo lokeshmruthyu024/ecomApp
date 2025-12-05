@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { toast } from 'sonner';
+import { toast } from 'react-hot-toast';
 import axios from 'axios' 
 import Spinner from '../../Components/Spinner';
 

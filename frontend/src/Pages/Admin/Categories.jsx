@@ -4,7 +4,7 @@
   import { AiOutlinePlus } from 'react-icons/ai'
   import { FiSearch } from 'react-icons/fi'
   import axios from 'axios'
-  import {toast} from 'sonner'
+import { toast } from 'react-hot-toast'
   import { RiEdit2Line, RiDeleteBin6Line } from 'react-icons/ri'
   import {addCategory, endfetchAllCategories, fetchAllCategories, startfetchAllCategories} from '../../Redux Toolkit/Category/categorySlice'
   import {removeCategory} from '../../Redux Toolkit/Category/categorySlice'

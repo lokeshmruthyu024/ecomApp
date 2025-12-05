@@ -7,7 +7,7 @@ import StarRatings from 'react-star-ratings';
 import { useAddToCart } from '../Hooks/useAddToCart';
 import { useRemoveFromCart } from '../Hooks/useRemoveFromCart';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
+import { toast } from 'react-hot-toast';
 import { endfetchAllreviews, fetchAllReviews, startfetchAllReviews, updatedReviews } from '../Redux Toolkit/Products/reviewSlice';
 // import { fetchAllProducts } from '../Redux Toolkit/Products/productSlice';
 

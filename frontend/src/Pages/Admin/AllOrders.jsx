@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { endFetch, fetchOrders, startFetch } from '../../Redux Toolkit/Order/adminOrdersSlice';
 import { FaBox, FaCreditCard, FaMoneyBillWave, FaTruck, FaUser, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { ImSpinner8 } from 'react-icons/im';
-import {toast} from 'sonner'
+import { toast } from 'react-hot-toast'
 const AllOrders = () => {
   const dispatch = useDispatch();
   const { Orders: orders, loading } = useSelector((state) => state.adminOrders);

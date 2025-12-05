@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { toast } from 'sonner'
+import { toast } from 'react-hot-toast'
 import axios from 'axios'
 import { endfetchALlCustomers, fetchALlCustomers, StartfetchALlCustomers } from '../../Redux Toolkit/Customers/customerSlice'
 import { useDispatch, useSelector } from 'react-redux'

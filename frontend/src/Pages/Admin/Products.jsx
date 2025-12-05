@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import {toast} from 'sonner'
+import { toast } from 'react-hot-toast'
 import axios from "axios"
 import Loader from '../../Components/Loader'
 import { endfetchAllProducts, fetchAllProducts, startfetchAllProducts } from '../../Redux Toolkit/Products/productSlice';

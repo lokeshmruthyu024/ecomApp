@@ -1,10 +1,10 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
-import { toast } from 'sonner'
+import { toast } from 'react-hot-toast'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
-const UpdateCategory = ({ id, setName , name , updated , setIsUpdate }) => {
+const UpdateCategory = ({ id, setName, name, updated, setIsUpdate }) => {
   const {
     register,
     handleSubmit,
@@ -36,11 +36,11 @@ const UpdateCategory = ({ id, setName , name , updated , setIsUpdate }) => {
 
   const onSubmit = async (data) => {
 
-   
+
     try {
       const response = await axios.put(
         import.meta.env.VITE_API_URL + `/update-category/${id}`,
-        data,   
+        data,
         {
           withCredentials: true,
         }
@@ -49,12 +49,12 @@ const UpdateCategory = ({ id, setName , name , updated , setIsUpdate }) => {
       const api_response = response.data
 
       if (api_response.success) {
-            toast.success(api_response.message)
-            setIsUpdate(!updated)
-            setName(!name)  
+        toast.success(api_response.message)
+        setIsUpdate(!updated)
+        setName(!name)
       }
     } catch (error) {
-        console.log(error)
+      console.log(error)
       toast.error(error?.response?.data?.message)
     }
   }
@@ -65,7 +65,7 @@ const UpdateCategory = ({ id, setName , name , updated , setIsUpdate }) => {
       {/* Modal Content */}
       <div className={`w-full max-w-md rounded-lg  border-1 p-6 ${currentTheme.bg} ${currentTheme.text} shadow-xl`}>
         <h2 className={`text-2xl font-semibold mb-4 ${currentTheme.heading}`}>Update Category</h2>
-        
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-sm mb-1">Category Name</label>
@@ -82,8 +82,8 @@ const UpdateCategory = ({ id, setName , name , updated , setIsUpdate }) => {
 
           <div className="flex justify-end gap-3">
             <button
-              onClick={()=> setName(!name)}
-              
+              onClick={() => setName(!name)}
+
               className="px-4 py-2 rounded-md border text-sm border-gray-900 cursor-pointer"
             >
               Cancel
@@ -92,7 +92,7 @@ const UpdateCategory = ({ id, setName , name , updated , setIsUpdate }) => {
               type='submit'
               className={`px-4 py-2 rounded-md text-sm
                 cursor-pointer  ${currentTheme.buttonPrimary}`}
-           >
+            >
               Save Changes
             </button>
           </div>

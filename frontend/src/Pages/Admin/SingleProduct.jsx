@@ -1,9 +1,9 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../Components/Loader";
 import { useSelector } from "react-redux";
-import {toast} from 'sonner'
+import { toast } from 'react-hot-toast'
 
 
 const theme = {
@@ -41,13 +41,13 @@ const SingleProduct = () => {
   const darkMode = useSelector((state) => state.theme.darkMode);
   const currentTheme = darkMode ? theme.dark : theme.light;
   const [reviews, Setreviews] = useState([]);
-  const userId = useSelector((state)=>state?.user?.user)
-    const [update,setUpdate] = useState(false) ;
-  
+  const userId = useSelector((state) => state?.user?.user)
+  const [update, setUpdate] = useState(false);
 
 
 
-   // products details 
+
+  // products details 
   useEffect(() => {
     async function fetchProduct() {
       try {
@@ -56,7 +56,7 @@ const SingleProduct = () => {
           `${import.meta.env.VITE_API_URL}/details/${id}`
         );
         if (response.data.success) {
-         
+
           setProduct(response?.data?.product);
         }
       } catch (error) {
@@ -67,54 +67,54 @@ const SingleProduct = () => {
     }
 
     fetchProduct();
-  }, [id,update]);
-   useEffect(() => {
+  }, [id, update]);
+  useEffect(() => {
 
-    const fetchReviews = async ()=>{
+    const fetchReviews = async () => {
 
       try {
 
         ;
-        const response = await axios.get(import.meta.env.VITE_API_URL+`/all-reviews?id=${id}`,{
-          withCredentials:true
-        }) ;
-        if(response.data.success){
+        const response = await axios.get(import.meta.env.VITE_API_URL + `/all-reviews?id=${id}`, {
+          withCredentials: true
+        });
+        if (response.data.success) {
 
           Setreviews(response.data?.reviews)
-          
+
         }
-        
+
       } catch (error) {
 
-       
+
         console.log(error)
       }
     }
     fetchReviews()
-    
+
   }, []);
 
 
-  const deleteReview = async (rId)=>{
+  const deleteReview = async (rId) => {
 
-    const response = await axios.delete(import.meta.env.VITE_API_URL+`/delete-review/${id}/${rId}`,{
+    const response = await axios.delete(import.meta.env.VITE_API_URL + `/delete-review/${id}/${rId}`, {
 
-      withCredentials:true 
-      
+      withCredentials: true
+
     })
 
-    if(response.data.success){
+    if (response.data.success) {
 
-      toast.success(response?.data?.message) ;
-      Setreviews((review) => review.filter((r)=> r._id !== rId) ) ;
+      toast.success(response?.data?.message);
+      Setreviews((review) => review.filter((r) => r._id !== rId));
       setUpdate(!update)
-      return ;
-      
+      return;
+
     }
   }
 
 
- 
+
 
   if (loading) return <Loader />;
 
@@ -124,35 +124,34 @@ const SingleProduct = () => {
     <div className={`min-h-screen py-10 px-4 ${currentTheme.bg} ${currentTheme.text}`}>
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Image Gallery */}
-      {/* Image Gallery */}
-<div>
-  <div className="w-full h-96 rounded-2xl shadow-xl border overflow-hidden flex items-center justify-center bg-gray-100">
-    <img
-      src={product.images[selectedImage]}
-      alt="Main"
-      className="max-h-full max-w-full object-contain"
-    />
-  </div>
-  <div className="flex gap-4 mt-4 overflow-x-auto py-2">
-    {product.images.map((img, index) => (
-      <div
-        key={index}
-        onClick={() => setSelectedImage(index)}
-        className={`flex-shrink-0 w-20 h-20 rounded-xl border-2 cursor-pointer overflow-hidden ${
-          selectedImage === index
-            ? "border-blue-500"
-            : "border-transparent"
-        }`}
-      >
-        <img
-          src={img}
-          alt={`Thumbnail ${index}`}
-          className="w-full h-full object-contain"
-        />
-      </div>
-    ))}
-  </div>
-</div>
+        {/* Image Gallery */}
+        <div>
+          <div className="w-full h-96 rounded-2xl shadow-xl border overflow-hidden flex items-center justify-center bg-gray-100">
+            <img
+              src={product.images[selectedImage]}
+              alt="Main"
+              className="max-h-full max-w-full object-contain"
+            />
+          </div>
+          <div className="flex gap-4 mt-4 overflow-x-auto py-2">
+            {product.images.map((img, index) => (
+              <div
+                key={index}
+                onClick={() => setSelectedImage(index)}
+                className={`flex-shrink-0 w-20 h-20 rounded-xl border-2 cursor-pointer overflow-hidden ${selectedImage === index
+                  ? "border-blue-500"
+                  : "border-transparent"
+                  }`}
+              >
+                <img
+                  src={img}
+                  alt={`Thumbnail ${index}`}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
 
         {/* Product Details */}
@@ -197,51 +196,51 @@ const SingleProduct = () => {
 
       {/* Reviews Section For Admin  */}
 
-     {/* Reviews Section For Admin */}
-<div className={`max-w-6xl mx-auto mt-12 ${currentTheme.text}`}>
-  <h2 className={`text-2xl font-bold mb-6 ${currentTheme.heading}`}>Product Reviews</h2>
+      {/* Reviews Section For Admin */}
+      <div className={`max-w-6xl mx-auto mt-12 ${currentTheme.text}`}>
+        <h2 className={`text-2xl font-bold mb-6 ${currentTheme.heading}`}>Product Reviews</h2>
 
-  {loading ? (
-    <Loader />
-  ) : reviews.length === 0 ? (
-    <p className={`${currentTheme.label}`}>No reviews found.</p>
-  ) : (
-    <div className="space-y-4">
-      {reviews.map((review) => (
-        <div
-          key={review._id}
-          className={`p-4 rounded-xl border ${currentTheme.border} ${currentTheme.card} shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4`}
-        >
-          <div className="flex items-start gap-4 w-full md:w-auto">
-            <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold text-lg">
-              {review.name?.charAt(0)?.toUpperCase()}
-            </div>
-            <div>
-              <p className={`font-semibold ${currentTheme.text}`}>{review.name}</p>
-              <p className={`text-sm ${currentTheme.label}`}>{review.comment}</p>
-              <div className="mt-1 text-yellow-400">
-                {"★".repeat(review.ratings)}{"☆".repeat(5 - review.ratings)}
-              </div>
-            </div>
-          </div>
+        {loading ? (
+          <Loader />
+        ) : reviews.length === 0 ? (
+          <p className={`${currentTheme.label}`}>No reviews found.</p>
+        ) : (
+          <div className="space-y-4">
+            {reviews.map((review) => (
+              <div
+                key={review._id}
+                className={`p-4 rounded-xl border ${currentTheme.border} ${currentTheme.card} shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4`}
+              >
+                <div className="flex items-start gap-4 w-full md:w-auto">
+                  <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold text-lg">
+                    {review.name?.charAt(0)?.toUpperCase()}
+                  </div>
+                  <div>
+                    <p className={`font-semibold ${currentTheme.text}`}>{review.name}</p>
+                    <p className={`text-sm ${currentTheme.label}`}>{review.comment}</p>
+                    <div className="mt-1 text-yellow-400">
+                      {"★".repeat(review.ratings)}{"☆".repeat(5 - review.ratings)}
+                    </div>
+                  </div>
+                </div>
 
-          {/* Delete Icon */}
-          <button
-            title="Delete Review"
-            className="text-red-500 hover:text-red-700 transition-colors duration-200
+                {/* Delete Icon */}
+                <button
+                  title="Delete Review"
+                  className="text-red-500 hover:text-red-700 transition-colors duration-200
             cursor-pointer"
-            
-          onClick={()=>{
 
-            deleteReview(review._id)
-          }}>
-            🗑️
-          </button>
-        </div>
-      ))}
-    </div>
-  )}
-</div>
+                  onClick={() => {
+
+                    deleteReview(review._id)
+                  }}>
+                  🗑️
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
 
 

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from 'react-redux'
 import {Link, Navigate} from 'react-router-dom'
 import axios from "axios" 
-import {toast} from 'sonner'
+import toast from 'react-hot-toast'
 import {useNavigate} from 'react-router-dom'
 import Spinner from '../Components/Spinner'
 import { signInEnd, signInStart, signInSuccess } from '../Redux Toolkit/User/userSlice'
@@ -37,7 +37,7 @@ const SignIn = () => {
       if(user.success){
 
         dispatch(signInSuccess(user.user))
-        toast.success(user.message) ;
+        toast.success(user.message ) ;
         if(user?.user?.role === 'admin'){
 
             navigate('/admin/dashboard') ;
@@ -54,13 +54,13 @@ const SignIn = () => {
        
       }
         
-      } catch (error) {
+        } catch (error) {
 
           dispatch(signInEnd())
           console.log(error)
           toast.error(error?.response?.data?.message)
-        
-      }
+
+        }
       finally{
 
            dispatch(signInEnd())
