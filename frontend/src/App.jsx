@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Toaster, toast } from "sonner";
+import { Toaster, toast } from "react-hot-toast";
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';

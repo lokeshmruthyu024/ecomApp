@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {toast} from "sonner" 
+import {toast} from "react-hot-toast" 
 import { useSelector , useDispatch } from 'react-redux'
 import { useAllCartItems } from './useAllCartItems';
 
